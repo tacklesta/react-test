@@ -7,7 +7,7 @@ const parent = React.createElement("div", {
 }, React.createElement("h2", {}, "Namaste React"))]);
 
 
-console.log(parent);
+//console.log(parent);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
