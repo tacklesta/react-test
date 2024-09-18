@@ -1,0 +1,153 @@
+!! JAVASCRIPT IS A SYNCHRONOUS SINGLE THREADED LANGUAGE !!
+
+npm install -D parcel ---> "-D" means dev dependancy i.e. ye sirf development env mai required hai prod env mai nhi package.
+parcel ----> Bundler for npm (Other EG: webpack)
+(^)caret and (~)tilde ---> In package.json ---> so what it means is : caret is used for minor version upgrade of the package installed and
+                                                tilde is used for major version upgrade if any in future.... Caret is prefered.
+
+package.json ---> It's config file for npm... It keeps track of versions of packages being used in the project.
+package-lock.json --> It's different from package.json.... It keeps track of all the fixed version of packages being used so that no conflict occurs in future due version upgrade.
+
+npx --> this command is used to execute package.
+
+#parcel
+    - Dev Build
+    - Local server
+    - HMR = Hot Module Replacement (auto refreshing the web page when any changes made in code and saved at run time) 
+    - File watching algorithm (developed in C++)
+    - Caching - For Faster dev builds (it's caching in folder named .parcel-cache folder)
+    - Image Optimization
+    - Consistent Hashing
+    - Minification
+    - Bundling and Compress
+    - It creates different dev and prod bundles.
+    - Tree Shaking (not using the unused code at the time of build)
+
+- In package.json we have "main": "App.js", which is created by react itself, we need to remove it from there, if we need to set the entry point for our build to some other file.
+
+- All the development builds which we are making by using npx are being stored in dist folder by parcel.
+
+- To make production build using parcel command used : "npx parcel build index.html"
+- To make development build using parcel command used : "npx parcel index.html"
+
+-> npx is a package executor.. so when we write npx parcel index.html --> it means we are asking npx to run the package parcel and we are giving index.html as input to parcel.
+-> npm is a package manager.
+
+---> npm run start === npm start ... start is a reserved keyword by npm but for production build we need to run npm run build only. npm build will not work.
+
+-> React.createElement --> It is a object not a html ---> when we render this object on DOM then it becomes a html not before.
+
+!! IMPORTANT !!
+
+-> JSX is not part of React.... It's just JSX is used as a syntax for React but they both can be used independently also.
+
+-> JSX is not HTML in JS.... JSX is HTML like syntax but not HTML.
+
+-----------------------------------------------------------------------------------------------------------------------
+-> Transpiler -> converts source code from one programming lang to another... SO JS Engine can not understand JSX but still it is
+                rendering on our DOM . The reason is : PARCEL(Bundler)...... So inside parcel we have "Babel" which is Transpiling our jsx code to js behind the scene so that our JS Engine can understand/render it.
+
+-> We use Babel with React to transpile the JSX code into simple React functions that can be understood by browsers.
+
+-> React.createElement ==>  It gives a React ELement(which is a JS object) ==> Post Rendering on DOM it becomes HTML Element.
+
+-> JSX (It is transcompiled by babel before it reaches the JS Engine).
+
+-> JSX is transcompiled into React Element which is a JS object and which then post rendering on DOM get's converted to HTML.
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+-> Functional Component is a JS function which returns a JSX object.
+
+-> Component Composition : (Usage of one component inside other component) 
+            const Heading2 = ()=>(
+                 <div id="container2">
+                    <Heading1 />
+                    <h1 class="head">Namaste React</h1>
+                </div>
+            );
+
+!! IMPORTANT !!
+-> We just need to use "{}" curly braces if we need to write js/react element inside our html in functional component. Eg:
+
+                            const num = 1000;
+                            const Heading2 = ()=>(
+                                <div id="container2">
+                                    {num}
+                                    <h1 class="head">Namaste React</h1>
+                                </div>
+                            );
+
+-> Injection Attacks taken care by JSX
+-> Injection attacks are when an attacker includes  malicious code within user input fields, and then submits those inputs to vulnerable systems. 
+-> Cross site scripting  attacks prevented by JSX itself.
+
+==================================================================================================================================================================
+
+-> Props = It is just a JS object which is passed as Argument to the dynamic functional components.
+                               - React wraps the prop as an object and then pass it to the functional component. 
+                               Eg : (props)=>{} OR WE CAN ALSO DO USING DESTRUCTURING syntax like this : ({resName,cuisine})=>{}
+
+-> State = Data that can change over time and re-render the component if changed. 
+
+-> Use useState hook for declaring state in  functional components. 
+
+====================================================================================================================================================================
+
+-> Config driven UI : So basically it is controlling how the UI looks like using data .
+                        Eg: For Delhi we have different offers and similarly for Banglore we have different offers over a website.
+
+-> Whenever using same component multiple times using map or loop or anything, always give it a key attribute.
+            REASON : Because react can not identify which one to come first , second etc.. without keys. So it will re-render all the components back again if we insert a new component. 
+                    So to prevent this re rendering of all the components , key attribute is important to help react understand.
+
+-> We can also use indexes as key in above example , but it is considered a bad practice to used indexes as keys because for the case when order of items   
+    change, this can negatively impact the performance .
+========================================================================================
+
+-> Two types of export : 1. Default export which is mostly used. It is used for exporting if we only have single component in a file to export.
+                            Eg: export default Header;
+
+                        2. Named export which is mostly used if we have to export multiple components in file. Also Whenever we have named exports we have to use curly braces while importing.
+                           Eg: export <name of component> = in const.js file --> export const CDN_url="" etc;.... for importing : import { CDN_url } from "./utils/const";  
+
+=================================================================================================================================================
+
+HOOKS  -> are utility functions(helper functions) given to us by react. In simple words they are just normal js functions which perform specific tasks.
+                         1. useState() : used to maintain state of a js variable dynamically with the help of virtual DOM.
+                                        syntax: const [variablename, setvariablename] = useState([by default value of variable]);
+                                               
+                                               - setvariablename() is used to update the state of the variable.
+                                               - variablename is the name of variable.
+
+                                        - it's just a js function which takes two argument = one is variable name and other is for setting state of that variable dynamically.
+                                        - it is just array destructing. use state() return two variables one is that variable name and other is setvariable one.
+                                        - it is used to create local state variable inside our function, so it will only work within the function not outside of it.
+                         2. useEffect() : "it is called after the component has rendered."
+                                          syntax: useEffect(()=>{<code to be executed>},[<dependency array>]);
+                                          - <code to be executed>(callback function) : it is a function which is executed after the component has rendered.
+                                          - <dependency array> : it is an array which contains the dependency of the function which is to be executed. If the dependency changes then the function is executed again.
+                                                                - if we don't pass any dependency array then the function is executed after every render.
+                                                                - if we pass an empty dependency array then the function is executed only once.
+                                                                - if we pass a dependency array then the function is executed only when the dependency changes.
+                                         Eg Usecase : When we want to show user our static data first(html,css etc) and then the fetched data , useEffect is used.                 
+
+
+
+-> How React makes our application Fast ? 
+                -> React is good at DOM Manipulation. 
+                -> Virtual DOM helps react to work fast.
+
+-> Why do we need useState , can't we just make a variable and update it ?
+                    -> we can make a variable and update it also but the main point is it wont show in our UI.
+                            Reason: variable has refreshed but it has not been re rendered on our screen and that's where useState comes into picture, Virtual DOM comes into picture... It re-renders our 
+                                    "component"(not all the component, just that one component where there is change) as soon as there is a change automatically.
+                    -> So, we can do it without useState also but then we need to render it explicitly everytime manually, so hooks(useState) helps us here.
+
+======================================================================================================
+
+-> Reconciliation algorithm (React Fiber) 
+-> React uses a concept called reconciliation algorithm to determine which components need to be re-rendered and 
+which components don't need to be re-rendered.(Virtual DOM)
+
+->  
