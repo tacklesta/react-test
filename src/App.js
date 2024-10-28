@@ -2,8 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import Header from "../components/Header";
 import Body from "../components/Body";
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import About from "../components/About";
+import Contact from "../components/contact";
+import Error from "../components/Error";
+import RestaurantMenu from "../components/RestaurantMenu";
 
 
 
@@ -54,23 +57,39 @@ const AppLayout = ()=>{
     return (
         <div className="app">
             <Header />
-            <Body />
+            <Outlet />  
         </div>
     )
 }
 
-
+{/** Routing */}
 const appRouter = createBrowserRouter([
     {
         path: "/",
         element: <AppLayout />,
+        children: [
+            {
+                path:"/",
+                element: <Body />,
+            },
+            {
+                path: "/about",
+                element: <About />,
+            },
+            {
+                path: "/contact",
+                element: <Contact />,
+            },
+            {
+                // dynamic path i.e. based on the input load the page
+                path: "/restaurants/:resid",
+                element: <RestaurantMenu />
+            },
+        ],
+        errorElement: <Error />
     },
-    {
-        path: "/about",
-        element: <About />
-    }
 ])
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-root.render(<AppLayout />);
+root.render(<RouterProvider router={appRouter} />);
